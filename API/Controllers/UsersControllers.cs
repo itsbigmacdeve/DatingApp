@@ -1,5 +1,6 @@
 ﻿using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace API.Controllers;
 // Para crear el controlador ocupamos llamar al ControllerBase
 //[ApiController]
 //[Route("api/users")] // /api/users, le cambie de api/[controller] a api/users
+[Authorize]
 public class UsersControllers : BaseApiController
 {
     private readonly DataContext _context;
@@ -16,6 +18,7 @@ public class UsersControllers : BaseApiController
         _context = context;
     }
 
+    [AllowAnonymous]
     //Obtiene una lista de todos los usuarios
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
