@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 // Para crear el controlador ocupamos llamar al ControllerBase
-[ApiController]
-[Route("api/users")] // /api/users, le cambie de api/[controller] a api/users
-public class UsersControllers : ControllerBase
+//[ApiController]
+//[Route("api/users")] // /api/users, le cambie de api/[controller] a api/users
+public class UsersControllers : BaseApiController
 {
     private readonly DataContext _context;
 
