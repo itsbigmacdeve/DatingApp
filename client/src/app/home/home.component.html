@@ -15,7 +15,10 @@
   <div *ngIf="registerMode" class="container">
     <div class="row justify-content-center">
       <div class="col-4">
-        <app-register [usersFromHomeComponent]="users"></app-register>
+        <!--Lo que se hace aqui es primero recibir los usuarios del componente del mismo  es decir de home.ts, despues desde el hijo que es register se recibe el metodo para poder cancelar el evento-->
+        <app-register
+          (cancelRegister)="cancelRegisteMode($event)"
+        ></app-register>
       </div>
     </div>
   </div>
