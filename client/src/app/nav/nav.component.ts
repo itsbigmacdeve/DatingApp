@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../_services/account.service';
+import { FormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { User } from '../_models/user';
 
