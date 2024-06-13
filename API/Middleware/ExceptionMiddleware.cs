@@ -1,3 +1,7 @@
+using System.Net;
+using System.Text.Json;
+using API.Errors;
+
 namespace API.Middleware
 {
     public class ExceptionMiddleware
@@ -35,6 +39,8 @@ namespace API.Middleware
 
                 await context.Response.WriteAsync(json);
             }
+
+            
         }
         
     }
