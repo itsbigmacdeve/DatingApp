@@ -17,6 +17,7 @@ namespace API.Extensions
             services.AddCors();
             // se agregan los servicios de token, la interfaz y la clase
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
             
