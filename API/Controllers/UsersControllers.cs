@@ -18,7 +18,7 @@ public class UsersControllers : BaseApiController
         _context = context;
     }
 
-    [AllowAnonymous]
+
     //Obtiene una lista de todos los usuarios
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()

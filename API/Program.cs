@@ -1,5 +1,9 @@
+using API.Data;
+using API.Entities;
 using API.Extensions;
 using API.Middleware;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,5 +33,22 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+// Este codigo se encarga de migrar la base de datos y de crearla si no existe, y ocupa estar desoues de app.MapControllers() y antes de app.Run()
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<DataContext>();
+    await context.Database.MigrateAsync();
+    await context.Database.EnsureCreatedAsync();
+    // var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    // var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+    await Seed.SeedUsers(context);
+}
+catch (Exception ex)
+{
+    var logger = services.GetService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred during migration");
+}
 
 app.Run();
