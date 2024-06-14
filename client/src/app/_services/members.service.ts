@@ -21,6 +21,10 @@ export class MembersService {
     return this.http.get<Member>(this.baseUrl + 'userscontrollers/' + username);
   }
 
+  updareMember(member: Member) {
+    return this.http.put(this.baseUrl + 'userscontrollers', member);
+  }
+
 
   //Este metodo obtiene un miembro por id, pero le pasa de header el token, YA NO SE OCUPA, AHORA ES CON EL INTERCEPTOR
   // getHttpOptions() {
