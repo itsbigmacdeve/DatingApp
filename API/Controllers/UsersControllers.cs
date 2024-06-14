@@ -30,11 +30,9 @@ public class UsersControllers : BaseApiController
     {
         //var users = await _context.Users.ToListAsync();
 
-        var users = await _userRepository.GetUsersAsync();
+        var users = await _userRepository.GetMembersAsync();
 
-        var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
-
-        return Ok(usersToReturn);
+        return Ok(users);
     }
 
     //Obtener el user del id que se le da
@@ -45,9 +43,8 @@ public class UsersControllers : BaseApiController
 
         // return user;
 
-        var user= await _userRepository.GetUserByUsernameAsync(username);
+        return await _userRepository.GetMemberAsync(username);
 
-        return _mapper.Map<MemberDto>(user);
     }
     
         
