@@ -23,8 +23,7 @@ export class AccountService {
         console.log('BaseUrl: ' + this.baseUrl)
         const user = response;
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUserSource.next(user);
+          this.setCurrentUser(user);
         }
       })
     );
@@ -34,8 +33,8 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map((user: User) => {
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUserSource.next(user);
+          
+          this.setCurrentUser(user);
         }
         return user; // se agrega para que el metodo register retorne el usuario, si no se marcara como undefined
       })
@@ -43,6 +42,7 @@ export class AccountService {
   }
 
   setCurrentUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
 
