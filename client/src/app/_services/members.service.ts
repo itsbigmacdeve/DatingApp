@@ -37,6 +37,10 @@ export class MembersService {
     );
   }
 
+  setMainPhoto(photoId: number) {
+    return this.http.put(this.baseUrl + 'userscontrollers/set-main-photo/' + photoId, {});
+  }
+
 
   //Este metodo obtiene un miembro por id, pero le pasa de header el token, YA NO SE OCUPA, AHORA ES CON EL INTERCEPTOR
   // getHttpOptions() {
