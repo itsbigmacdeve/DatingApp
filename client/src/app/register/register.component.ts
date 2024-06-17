@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   initializeForm() {
     //TODO ESTE METODO CAMBIO
     this.registerForm = new FormGroup({
-      username: new FormControl('Hello', Validators.required),
+      username: new FormControl('', Validators.required),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
@@ -44,6 +44,9 @@ export class RegisterComponent implements OnInit {
         this.matchValues('password'),
       ]),
     });
+    this.registerForm.controls["password"].valueChanges.subscribe({
+      next: () => this.registerForm.controls["confirmPassword"].updateValueAndValidity()
+    })
   }
 
   matchValues(matchTo: string): ValidatorFn {
