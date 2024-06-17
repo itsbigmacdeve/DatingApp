@@ -41,6 +41,12 @@ export class MembersService {
     return this.http.put(this.baseUrl + 'userscontrollers/set-main-photo/' + photoId, {});
   }
 
+  deletePhoto(photoId: number) {
+    return this.http.delete(this.baseUrl + 'userscontrollers/delete-photo/' + photoId);
+  }
+
+
+
 
   //Este metodo obtiene un miembro por id, pero le pasa de header el token, YA NO SE OCUPA, AHORA ES CON EL INTERCEPTOR
   // getHttpOptions() {
