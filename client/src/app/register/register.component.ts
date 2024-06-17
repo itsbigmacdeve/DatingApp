@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import {
   AbstractControl,
   Form,
+  FormBuilder,
   FormControl,
   FormGroup,
   ValidatorFn,
@@ -23,7 +24,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private toastr: ToastrService
+    private toastr: ToastrService, private fb : FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -32,17 +33,22 @@ export class RegisterComponent implements OnInit {
 
   initializeForm() {
     //TODO ESTE METODO CAMBIO
-    this.registerForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', [
-        Validators.required,
+    this.registerForm = this.fb.group({
+      gender: ['male'],
+      username: ['', [Validators.required]],
+      knownAs: ['', [Validators.required]],
+      dateOfBirth: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      country: ['', [Validators.required]],
+      password: ['', [
+      Validators.required,
         Validators.minLength(4),
         Validators.maxLength(8),
-      ]),
-      confirmPassword: new FormControl('', [
+      ]],
+      confirmPassword: ['', [
         Validators.required,
         this.matchValues('password'),
-      ]),
+      ]],
     });
     this.registerForm.controls["password"].valueChanges.subscribe({
       next: () => this.registerForm.controls["confirmPassword"].updateValueAndValidity()
