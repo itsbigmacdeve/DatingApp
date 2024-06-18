@@ -36,6 +36,196 @@
                 "${workspaceFolder}/DatingApp.sln"
             ],
             "problemMatcher": "$msCompile"
+        },
+        // setup frontend
+        {
+            "label": "install frontend ssl cert",
+            "detail": "(mkcert localhost) install SSL certificate for localhost",
+            "type": "shell",
+            "command": "mkcert localhost",
+            "options": {
+                "cwd": "${workspaceFolder}/client/ssl",
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/c"
+                    ]
+                }
+            },
+            "presentation": {
+                "panel": "shared",
+                "group": "myGroup"
+            }
+        },
+        {
+            "label": "install node_module",
+            "detail": "(npm i) install node modules",
+            "type": "shell",
+            "command": "npm i",
+            "options": {
+                "cwd": "${workspaceFolder}/client",
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/c"
+                    ]
+                }
+            },
+            "presentation": {
+                "panel": "shared",
+                "group": "myGroup"
+            }
+        },
+        {
+            "label": "setup frontend",
+            "detail": "[ (1) install frontend ssl cert, (2) install node_module ] | this will set up the frontend",
+            "dependsOn": [
+                "install frontend ssl cert",
+                "install node_module"
+            ],
+            "dependsOrder": "sequence"
+        },
+        // (bash) delete .angular/
+        {
+            "label": "(bash) delete .angular/",
+            "detail": "(rm -fR .angular) delete the .angular directory",
+            "type": "shell",
+            "command": "rm -fR .angular",
+            "options": {
+                "cwd": "${workspaceFolder}/client",
+                "shell": {
+                    "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+                    "args": [
+                        "-c"
+                    ]
+                }
+            },
+            "presentation": {
+                "panel": "shared",
+                "group": "myGroup"
+            }
+        },
+        // (bash) delete package-lock.json
+        {
+            "label": "(bash) delete package-lock.json",
+            "detail": "(rm package-lock.json) delete the package-lock.json file if it exists",
+            "type": "shell",
+            "command": "[ -f package-lock.json ] && rm package-lock.json || echo 'No package-lock.json to remove'",
+            "options": {
+                "cwd": "${workspaceFolder}/client",
+                "shell": {
+                    "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+                    "args": [
+                        "-c"
+                    ]
+                }
+            },
+            "presentation": {
+                "panel": "shared",
+                "group": "myGroup"
+            }
+        },
+        // (bash) delete node_modules
+        {
+            "label": "(bash) delete node_modules",
+            "detail": "(rm -fR node_modules) delete the node_modules directory",
+            "type": "shell",
+            "command": "rm -fR node_modules",
+            "options": {
+                "cwd": "${workspaceFolder}/client",
+                "shell": {
+                    "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+                    "args": [
+                        "-c"
+                    ]
+                }
+            },
+            "presentation": {
+                "panel": "shared",
+                "group": "myGroup"
+            }
+        },
+        // (sequence) (bash) reset frontend
+        {
+            "label": "(sequence) (bash) reset frontend",
+            "detail": "[ (1) delete .angular/, (2) delete package-lock.json, (3) delete node_modules ] | this will reset the frontend",
+            "dependsOn": [
+                "(bash) delete .angular/",
+                "(bash) delete package-lock.json",
+                "(bash) delete node_modules"
+            ],
+            "dependsOrder": "sequence"
+        },
+        // update node modules and dependencies
+        {
+            "label": "npm update",
+            "detail": "(npm update) update node modules and dependencies",
+            "type": "shell",
+            "command": "npm update",
+            "options": {
+                "cwd": "${workspaceFolder}/client",
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/c"
+                    ]
+                }
+            },
+            "presentation": {
+                "panel": "shared",
+                "group": "myGroup"
+            }
+        },
+        {
+            "label": "update all dependencies",
+            "detail": "(npm i -g npm-check-updates) globally install npm-check-updates",
+            "type": "shell",
+            "command": "npm i -g npm-check-updates",
+            "options": {
+                "cwd": "${workspaceFolder}/client",
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/c"
+                    ]
+                }
+            },
+            "presentation": {
+                "panel": "shared",
+                "group": "myGroup"
+            }
+        },
+        {
+            "label": "execute update node dependencies",
+            "detail": "(ncu -u) update the package.json dependencies to their latest versions",
+            "type": "shell",
+            "command": "ncu -u",
+            "options": {
+                "cwd": "${workspaceFolder}/client",
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/c"
+                    ]
+                }
+            },
+            "presentation": {
+                "panel": "shared",
+                "group": "myGroup"
+            }
+        },
+        // (sequence) (bash) update package.json
+        {
+            "label": "(sequence) (bash) update package.json",
+            "detail": "[ (1) reset frontend, (2) npm update, (3) update all dependencies, (4) execute update node dependencies, (5) install node_module ] | this will update the package.json",
+            "dependsOn": [
+                "(sequence) (bash) reset frontend",
+                "npm update",
+                "update all dependencies",
+                "execute update node dependencies",
+                "install node_module"
+            ],
+            "dependsOrder": "sequence"
         }
     ]
 }
