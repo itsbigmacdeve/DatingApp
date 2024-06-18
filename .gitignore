@@ -5,6 +5,9 @@
 
 # User-specific files
 *.rsuser
+*.db
+*.db-shm
+*.db-wal
 *.suo
 *.user
 *.userosscache
