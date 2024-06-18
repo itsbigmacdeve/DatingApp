@@ -1,21 +1,25 @@
-@if(!registerMode) {
-<h1>Find your match</h1>
-<p class="lead">
-  Come on in to view your matches... all you need to do is sing up!
-</p>
-<div class="text-center">
-  <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">
-    Register
-  </button>
-  <button class="btn btn-primary btn-info btn-lg me-2">Learn more</button>
-</div>
-} @if(registerMode) {
+<div class="container mt-5">
+  <div *ngIf="!registerMode" style="text-align: center">
+    <h1>Find your match</h1>
+    <p class="lead">
+      Come on in to view your matches... all you need to do is sing up!
+    </p>
+    <div class="text-center">
+      <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">
+        Register
+      </button>
+      <button class="btn btn-primary btn-info btn-lg me-2">Learn more</button>
+    </div>
+  </div>
 
-<div class="row justify-content-center">
-  <div class="col-4">
-    <!--Lo que se hace aqui es primero recibir los usuarios del componente del mismo  es decir de home.ts, despues desde el hijo que es register se recibe el metodo para poder cancelar el evento-->
-    <app-register (cancelRegister)="cancelRegisteMode($event)"></app-register>
+  <div *ngIf="registerMode" class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <!--Lo que se hace aqui es primero recibir los usuarios del componente del mismo  es decir de home.ts, despues desde el hijo que es register se recibe el metodo para poder cancelar el evento-->
+        <app-register
+          (cancelRegister)="cancelRegisteMode($event)"
+        ></app-register>
+      </div>
+    </div>
   </div>
 </div>
-
-}
