@@ -4,10 +4,10 @@ namespace API.Helpers
     {
         public PaginationHeader(int currentPage, int itemsPerPage, int totalItems, int totalPages)
         {
-            CurrentPage = CurrentPage;
-            ItemsPerPage = ItemsPerPage;
-            TotalItems = TotalItems;
-            TotalPages = TotalPages;
+            CurrentPage = currentPage;
+            ItemsPerPage = itemsPerPage;
+            TotalItems = totalItems;
+            TotalPages = totalPages;
         }
 
         public int CurrentPage { get; set; }
