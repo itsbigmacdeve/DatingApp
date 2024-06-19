@@ -62,7 +62,7 @@ export class MembersService {
 
   //Este metodo obtiene un miembro por username
   getMember(username: string) {
-    
+    const member 
     return this.http.get<Member>(this.baseUrl + 'userscontrollers/' + username);
   }
 
