@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240619234628_LikeEntityAdded")]
+    [Migration("20240619234922_LikeEntityAdded")]
     partial class LikeEntityAdded
     {
         /// <inheritdoc />
