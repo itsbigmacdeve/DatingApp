@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Helpers
@@ -8,13 +7,13 @@ namespace API.Helpers
 
         public PagedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
         {
-            CurrentPag = pageNumber;
+            CurrentPage = pageNumber;
             TotalPages = (int) Math.Ceiling(count / (double) pageSize);
             PageSize = pageSize;
             TotalCount = count;
             AddRange(items);
         }
-        public int CurrentPag { get; set; }
+        public int CurrentPage { get; set; }
 
         public int TotalPages { get; set; }
 

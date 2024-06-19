@@ -27,11 +27,11 @@ namespace API.Data
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<PagedList<MemberDto>> GetMembersAsync()
+        public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams UserParams)
         {
             var query = _context.Users.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking();
 
-            return await PagedList<MemberDto>.CreateAsync(query, 1, 10);
+            return await PagedList<MemberDto>.CreateAsync(query, UserParams.PageNumber, UserParams.PageSize );
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)
