@@ -51,7 +51,8 @@ namespace API.Data
                 Age = user.DateOfBirth.CalculateAge(),
                 KnownAs = user.KnownAs,
                 PhotoUrl = user.Photos.FirstOrDefault(p => p.IsMain).Url,
-                City = user.City
+                City = user.City,
+                Id = user.Id
             }).ToListAsync();
         }
 
