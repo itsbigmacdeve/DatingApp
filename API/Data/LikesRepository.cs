@@ -1,6 +1,7 @@
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,29 +23,29 @@ namespace API.Data
             return await context.Likes.FindAsync(sourceUserId, targetUserId);
         }
 
-        public async Task<IEnumerable<LikeDto>> GetUserLikes(string predicate, int userId)
+        public async Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams)
         {
             // Primero ejecuta 2 consultas, que pueden ser manipuldas despues, primero obtenermos todos los usuarios, y despues todos los likes
             var users = context.Users.OrderBy(u => u.UserName).AsQueryable();
             var likes = context.Likes.AsQueryable();
 
             // si el predicado es igual a liked, entonces se filtra los likes, para que solo se muestren los que el usuario le dio like , es decir los que le gustan
-            if (predicate == "liked")
+            if (likesParams.Predicate == "liked")
             {
-                likes = likes.Where(like => like.SourceUserId == userId);
+                likes = likes.Where(like => like.SourceUserId == likesParams.UserId);
                 users = likes.Select(like => like.TargetUser);
             }
 
             // si el predicado es igual a likedBy, entonces se filtra los likes, para que solo se muestren los que le dieron like al usuario, es decir yo Victor, a los que le gusto, por ejemplo le gusto a Melissa, Sarah, por ejemplo
-            if (predicate == "likedBy")
+            if (likesParams.Predicate == "likedBy")
             {
-                likes = likes.Where(like => like.TargetUserId == userId);
+                likes = likes.Where(like => like.TargetUserId == likesParams.UserId);
                 users = likes.Select(like => like.SourceUser);
             }
 
 
             // se retorna una lista de likes, que se obtiene de la lista de usuarios, y se mapea a un likeDto, dependiendo de los datos que se quieran mostrar liked o likedBy
-            return await users.Select(user => new LikeDto
+            var likedUsers =  users.Select(user => new LikeDto
             {
                 //se mappea la informacion de los usuarios, a un likeDto, es decir se le dice a que propiedades de likeDto, se le asigna la informacion de los usuarios
                 UserName = user.UserName,
@@ -53,7 +54,11 @@ namespace API.Data
                 PhotoUrl = user.Photos.FirstOrDefault(p => p.IsMain).Url,
                 City = user.City,
                 Id = user.Id
-            }).ToListAsync();
+            });
+
+            // Ya no devolvemos inmediateamente la lista de usuarios, sino que la convertimos en una lista paginada, para que se pueda manejar de una mejor manera
+
+            return await PagedList<LikeDto>.CreateAsync(likedUsers, likesParams.PageNumber, likesParams.PageSize);
         }
 
         public async Task<AppUser> GetUserWithLikes(int userId)
