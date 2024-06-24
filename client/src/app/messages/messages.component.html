@@ -65,7 +65,7 @@
           </td>
             <td>{{message.messageSent| timeago: 'medium'}}</td>
             <td>
-                <button class="btn btn-danger">Delete</button>
+                <button (click)="deleteMessage(message.id)" class="btn btn-danger">Delete</button>
             </td>
         </tr>
       </tbody>
