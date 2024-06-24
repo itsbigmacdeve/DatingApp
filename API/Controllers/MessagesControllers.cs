@@ -77,7 +77,7 @@ namespace API.Controllers
 
             var message = await _messageRepository.GetMessage(id);
 
-            if (message.Sender.UserName != username && message.RecipientUsername != username) return Unauthorized();
+            if (message.SenderUsername != username && message.RecipientUsername != username) return Unauthorized("No puedes borrar este mensaje");
 
 
             if (message.SenderUsername == username) message.SenderDeleted = true;
