@@ -33,13 +33,12 @@ namespace API.Controllers
             
             var user = _mapper.Map<AppUser>(registerDto);
             
-            using var hmac = new HMACSHA512();
+            
 
             //creamos un nuevo usuario
             
             user.UserName = registerDto.Username.ToLower();
-            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
-            user.PasswordSalt = hmac.Key;
+            
             
             // llamamos al contexto y le agregamos el usuario, el contexto es el que se encarga de hacer la comunicacion con la base de datos y tiene una serie de metodos que nos permiten hacer operaciones con la base de datos
             _context.Users.Add(user);
@@ -61,15 +60,7 @@ namespace API.Controllers
 
             if (user == null) return Unauthorized("invalid username");
 
-            // para verificar si la contraseña es correcta
-            using var hmac = new HMACSHA512(user.PasswordSalt);
-
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-
-            for (int i = 0; i < computedHash.Length; i++)
-            {
-                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("invalid password");
-            }
+            
 
             return new UserDto
             {
