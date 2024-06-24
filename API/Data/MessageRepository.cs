@@ -59,7 +59,7 @@ namespace API.Data
                 .Where(m => m.RecipientUsername == currentUsername &&
                         m.SenderUsername == recipientUsername
                         || m.RecipientUsername == recipientUsername
-                         && m.Sender.UserName == currentUsername).OrderByDescending(m => m.MessageSent).ToListAsync();
+                         && m.Sender.UserName == currentUsername).OrderBy(m => m.MessageSent).ToListAsync();
 
 
             var unreadMessages = messages.Where(m => m.DateRead == null && m.RecipientUsername == currentUsername).ToList();
