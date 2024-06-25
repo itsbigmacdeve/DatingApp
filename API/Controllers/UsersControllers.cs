@@ -27,6 +27,7 @@ public class UsersControllers : BaseApiController
 
 
     //Obtiene una lista de todos los usuarios
+    
     [HttpGet]
     public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
     {
@@ -49,6 +50,7 @@ public class UsersControllers : BaseApiController
     }
 
     //Obtener el user del id que se le da
+
     [HttpGet("{username}")] // api/userscontrollers/3
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
