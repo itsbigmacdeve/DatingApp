@@ -33,6 +33,21 @@ export class MessageService {
       console.log(messages);
     });
 
+    this.hubConnection.on('UpdatedGroup', (group: any) => {
+      if (group.connections.some((x: any) => x.username === otherUsername)) {
+        this.messageThread$.pipe(take(1)).subscribe({
+          next: messages => {
+            messages.forEach(message => {
+              if (!message.dateRead) {
+                message.dateRead = new Date(Date.now());
+              }
+            });
+            this.messageThreadSource.next([...messages]);
+          }
+        })
+      }
+    });
+
     this.hubConnection.on('NewMessage', message => {
       this.messageThread$.pipe(take(1)).subscribe({
         next: messages => {
